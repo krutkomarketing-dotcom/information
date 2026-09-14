@@ -1,4 +1,4 @@
-# GitHub Pages отдаёт robots.txt только из корня домена (borisserz.github.io/robots.txt),
+# GitHub Pages отдаёт robots.txt только из корня домена (moggerrescure.github.io/robots.txt),
 # поэтому этот файл начнёт работать после переезда на свой домен. Sitemap подхватывается и так.
 User-agent: *
 Allow: /
