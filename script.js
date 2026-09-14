@@ -1,29 +1,21 @@
 /* ==========================================================================
    KV-web — логика лендинга.
 
-   ┌──────────────────────────────────────────────────────────────────────┐
-   │ КУДА ПАДАЮТ ЗАЯВКИ — единственное место, которое нужно настроить.    │
-   │ Пропишите ENDPOINT ниже, и все 4 формы начнут отправлять данные.     │
-   │ Пока он пустой — форма проверяет поля и показывает «спасибо»,        │
-   │ а содержимое пишет в консоль браузера (F12).                         │
-   └──────────────────────────────────────────────────────────────────────┘
-
-   Варианты:
-   1) Telegram-бот (без сервера):
-      ENDPOINT = 'https://api.telegram.org/bot<ТОКЕН>/sendMessage'
-      MODE     = 'telegram'  +  укажите CHAT_ID
-      Минус: токен виден в коде страницы. Для боевого сайта лучше пункт 3.
-   2) Почта через сервис форм (formspree / getform / formcarry):
-      ENDPOINT = 'https://formspree.io/f/xxxxxxx'
-      MODE     = 'json'
-   3) Свой обработчик на хостинге (php/node), рекомендуется:
-      ENDPOINT = '/send.php'
-      MODE     = 'json'
+   Заявки: если ENDPOINT пустой, форма шлёт письмо через FormSubmit
+   на CONTACT.email (первый раз нужно подтвердить ящик по ссылке из письма).
+   Когда задеплоен worker/ (почта + Telegram, секреты не в странице),
+   впишите его URL в ENDPOINT — форма пойдёт туда и перестанет звать FormSubmit.
    ========================================================================== */
+const CONTACT = {
+  phoneDisplay: '+375 (29) 252-80-43',
+  phoneTel: '+375292528043',
+  email: 'krutko.marketing@gmail.com',
+  telegram: 'https://t.me/sq_dbl',
+  whatsapp: 'https://wa.me/375292528043'
+};
+
 const FORM_CONFIG = {
   ENDPOINT: '',
-  MODE: 'json',      // 'json' | 'telegram'
-  CHAT_ID: '',       // только для MODE:'telegram'
   SITE: 'KV-web — лендинг'
 };
 
@@ -2373,13 +2365,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btn) { btn.disabled = true; btn.textContent = 'Отправляем…'; }
 
       try {
-        await deliver(data);
+        const result = await deliver(data);
         form.reset();
         form.querySelectorAll('.is-bad').forEach(el => el.classList.remove('is-bad'));
-        say(msg, 'Спасибо! Заявка принята — свяжемся с вами в ближайшее время.', 'is-ok');
+        if (result.quiet) {
+          say(msg, 'Спасибо! Заявка принята — свяжемся с вами в ближайшее время.', 'is-ok');
+        } else {
+          showSent(msg, result);
+        }
       } catch (err) {
         console.error(err);
-        say(msg, 'Не получилось отправить. Позвоните нам: +375 (29) 000-00-00', 'is-bad');
+        showFail(msg);
       } finally {
         if (btn) { btn.disabled = false; btn.textContent = label; }
       }
@@ -2402,28 +2398,75 @@ document.addEventListener('DOMContentLoaded', () => {
     node.className = 'formmsg ' + cls;
   }
 
+  function channelLink(href, text) {
+    const a = document.createElement('a');
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.textContent = text;
+    return a;
+  }
+
+  function showSent(node, result) {
+    if (!node) return;
+    const wa = CONTACT.whatsapp + '?text=' + encodeURIComponent('Здравствуйте, пишу с сайта KV-web');
+    node.className = 'formmsg is-ok';
+    node.replaceChildren();
+    const lead = result.via === 'worker'
+      ? 'Заявка принята. Можно сразу написать нам: '
+      : 'Заявка ушла на почту. Если удобнее — напишите сразу: ';
+    node.append(
+      document.createTextNode(lead),
+      channelLink(CONTACT.telegram, 'Telegram'),
+      document.createTextNode(' · '),
+      channelLink(wa, 'WhatsApp')
+    );
+  }
+
+  function showFail(node) {
+    if (!node) return;
+    node.className = 'formmsg is-bad';
+    node.replaceChildren();
+    node.append(
+      document.createTextNode('Не получилось отправить. Позвоните ' + CONTACT.phoneDisplay + ' или напишите в '),
+      channelLink(CONTACT.telegram, 'Telegram'),
+      document.createTextNode(' / '),
+      channelLink(CONTACT.whatsapp, 'WhatsApp'),
+      document.createTextNode('.')
+    );
+  }
+
   async function deliver(data) {
-    if (!FORM_CONFIG.ENDPOINT) {
-      console.info('[KV-web] ENDPOINT не задан. Данные заявки:', data);
-      await new Promise(r => setTimeout(r, 500));
-      return;
-    }
-    if (FORM_CONFIG.MODE === 'telegram') {
-      const lines = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n');
+    if (String(data.company || '').trim()) return { quiet: true };
+    const payload = { ...data };
+    delete payload.company;
+
+    if (FORM_CONFIG.ENDPOINT) {
       const res = await fetch(FORM_CONFIG.ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: FORM_CONFIG.CHAT_ID, text: `🔔 ${FORM_CONFIG.SITE}\n\n${lines}` })
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
       });
-      if (!res.ok) throw new Error('Telegram ' + res.status);
-      return;
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const body = await res.json().catch(() => ({}));
+      if (body.ok === false) throw new Error('lead rejected');
+      return { via: 'worker', ...body };
     }
-    const res = await fetch(FORM_CONFIG.ENDPOINT, {
+
+    const res = await fetch('https://formsubmit.co/ajax/krutko.marketing@gmail.com', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: FORM_CONFIG.SITE + ': ' + (payload['Форма'] || 'Заявка'),
+        _template: 'table',
+        _captcha: 'false',
+        ...payload
+      })
     });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const body = await res.json().catch(() => ({}));
+    const accepted = body.success === true || body.success === 'true';
+    if (!res.ok || !accepted) throw new Error(body.message || 'email ' + res.status);
+    return { via: 'email' };
   }
 
   /* =========================================================

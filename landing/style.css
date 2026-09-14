@@ -604,6 +604,7 @@ main>section{padding-block:0 var(--sec)}
 .quiz__input::placeholder{color:rgba(255,255,255,.55)}
 .quiz__input:focus{background:rgba(255,255,255,.12);border-color:var(--lime);outline:none;box-shadow:0 0 16px rgba(196,244,73,.25)}
 .quiz__input.is-bad{border-color:#FF6A6A;box-shadow:0 0 16px rgba(255,106,106,.25)}
+.quiz__input--area{height:auto;min-height:96px;padding:14px 22px;resize:vertical;line-height:1.4}
 
 .hint{width:24px;height:24px;flex:0 0 auto;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:700;cursor:pointer;position:relative;transition:background .2s}
 .hint:hover{background:var(--lime);color:var(--lime-ink)}
@@ -661,6 +662,8 @@ main>section{padding-block:0 var(--sec)}
 .consent--muted{color:rgba(61,61,61,.85);letter-spacing:.04em}
 
 .formmsg{margin-top:16px;font-size:15px;font-weight:700;min-height:1.2em;text-align:center}
+.formmsg a{color:inherit;text-decoration:underline}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
 .formmsg.is-ok{color:var(--lime)}
 .formmsg.is-bad{color:#FF8B6B}
 .form .formmsg{text-align:left}
@@ -1004,6 +1007,7 @@ main>section{padding-block:0 var(--sec)}
 .fld::placeholder{color:#fff;opacity:.95}
 .fld:focus{outline:2px solid var(--lime);outline-offset:2px;background:rgba(255,255,255,.28)}
 .fld.is-bad{border-color:#FFB4A2;outline:2px solid #FF8B6B}
+.fld--area{height:auto;min-height:96px;padding:16px 26px;resize:vertical;line-height:1.4;flex:1 0 100%}
 .fld--light{background:#fff;border:1px solid rgba(0,0,0,.1);color:var(--ink);font-weight:600;font-size:16px}
 .fld--light::placeholder{color:rgba(61,61,61,.4)}
 .form__label{font-size:16px;font-weight:600;margin-bottom:12px}
@@ -2497,8 +2501,10 @@ main>section{padding-block:0 var(--sec)}
 }
 .actionbar__btn--main{flex:1;min-width:0;background:var(--orange-grad);color:#fff;
   text-transform:uppercase;letter-spacing:.04em;font-size:13px;padding:0 12px;text-align:center}
-.actionbar__btn--ghost{flex:0 0 52px;width:52px;padding:0;background:var(--lilac);color:var(--ink)}
-.actionbar__btn--ghost svg{width:22px;height:22px}
+.actionbar__btn--ghost{flex:0 0 44px;width:44px;padding:0;background:var(--lilac);color:var(--ink)}
+.actionbar__btn--tg{flex:0 0 44px;width:44px;padding:0;background:#2AABEE;color:#fff}
+.actionbar__btn--wa{flex:0 0 44px;width:44px;padding:0;background:#25D366;color:#fff}
+.actionbar__btn--ghost svg,.actionbar__btn--tg svg,.actionbar__btn--wa svg{width:22px;height:22px}
 .actionbar__btn:active{transform:scale(.97)}
 
 /* ==========================================================================
@@ -2684,6 +2690,7 @@ main>section{padding-block:0 var(--sec)}
   .opt__mark::after { width: 6px; height: 6px; }
   .quiz__nav .btn { min-width: 0; width: 100%; min-height: 56px; }
   .quiz__input { height: 52px; font-size: 16px; padding: 0 18px; border-radius: 12px; }
+  .quiz__input--area { height: auto; min-height: 96px; padding: 14px 18px; }
 
   /* Блок «Почему мы»: сетка 2x2 вместо бесконечного вертикального списка */
   .why__card, .blog__card, .clients__card, .reviews__card { border-radius: 24px; }
@@ -2924,7 +2931,7 @@ main>section{padding-block:0 var(--sec)}
   .wstat span { font-size: 11px; }
   .actionbar { padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); }
   .actionbar__btn--main { font-size: 12px; min-height: 48px; }
-  .actionbar__btn--ghost { flex: 0 0 48px; width: 48px; min-height: 48px; }
+  .actionbar__btn--ghost, .actionbar__btn--tg, .actionbar__btn--wa { flex: 0 0 40px; width: 40px; min-height: 48px; }
 }
 
 @media (prefers-reduced-motion:reduce){
