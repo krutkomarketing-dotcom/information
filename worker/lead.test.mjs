@@ -95,6 +95,29 @@ test('returns 502 when every channel fails', async () => {
   assert.equal(res.status, 502);
 });
 
+test('emails via FormSubmit when CONTACT_EMAIL is set', async () => {
+  const calls = [];
+  const res = await handleLead(post({
+    Форма: 'Быстрая заявка',
+    Имя: 'Анна',
+    Телефон: '+375292528043',
+    Сообщение: 'Нужен лендинг'
+  }), {
+    ...env,
+    WEB3FORMS_ACCESS_KEY: '',
+    CONTACT_EMAIL: 'krutko.marketing@gmail.com'
+  }, async (url, init) => {
+    calls.push({ url, init });
+    return new Response(JSON.stringify({ ok: true, success: 'true' }), { status: 200 });
+  });
+  assert.equal(res.status, 200);
+  const mail = calls.find(c => String(c.url).includes('formsubmit.co/ajax/krutko.marketing@gmail.com'));
+  assert.ok(mail, 'formsubmit call');
+  const body = JSON.parse(mail.init.body);
+  assert.match(body['Сообщение'], /Нужен лендинг/);
+  assert.equal(body.company, undefined);
+});
+
 test('OPTIONS is a CORS preflight, not a lead', async () => {
   const res = await handleLead(new Request('https://leads.example/lead', {
     method: 'OPTIONS',

@@ -37,6 +37,28 @@ async function sendTelegram(env, text, fetchImpl) {
   return res.ok;
 }
 
+async function sendFormSubmit(env, data, fetchImpl) {
+  const payload = { ...data };
+  delete payload.company;
+  const res = await fetchImpl(`https://formsubmit.co/ajax/${env.CONTACT_EMAIL}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Origin: 'https://borisserz.github.io',
+      Referer: 'https://borisserz.github.io/information/'
+    },
+    body: JSON.stringify({
+      _subject: `${env.SITE || 'KV-web'}: ${data['Форма'] || 'Заявка'}`,
+      _template: 'table',
+      _captcha: 'false',
+      ...payload
+    })
+  });
+  const body = await res.json().catch(() => ({}));
+  return body.success === true || body.success === 'true';
+}
+
 async function sendMail(env, data, text, fetchImpl) {
   const res = await fetchImpl('https://api.web3forms.com/submit', {
     method: 'POST',
@@ -85,6 +107,8 @@ export async function handleLead(request, env, fetchImpl = fetch) {
   }
   if (env.WEB3FORMS_ACCESS_KEY) {
     jobs.push(sendMail(env, data, text, fetchImpl).then(ok => ({ email: ok })));
+  } else if (env.CONTACT_EMAIL) {
+    jobs.push(sendFormSubmit(env, data, fetchImpl).then(ok => ({ email: ok })));
   }
   if (!jobs.length) {
     return json(502, { ok: false, error: 'no channels' }, headers);

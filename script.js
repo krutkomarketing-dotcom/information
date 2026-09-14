@@ -15,7 +15,7 @@ const CONTACT = {
 };
 
 const FORM_CONFIG = {
-  ENDPOINT: '',
+  ENDPOINT: 'https://kv-web-leads.kvweb.workers.dev',
   SITE: 'KV-web — лендинг'
 };
 
