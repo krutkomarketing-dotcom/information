@@ -2985,6 +2985,16 @@ main>section{padding-block:0 var(--sec)}
   .tune-btn { font-size: 10.5px; }
   .widget-pill, .wtag { font-size: 10.5px; }
 
+  /* Карусель кейсов: на телефоне боковые стрелки убираем (есть стрелки в шапке блока, свайп и точки),
+     иначе левая отъедает колонку и сжимает карточку, а правая падает под карусель */
+  .cases-btn { display: none; }
+  .cases-carousel__row { display: block; }
+  /* бейджи под картинкой, а не поверх неё — в две строки они закрывали половину превью */
+  .case__media { display: flex; flex-direction: column; aspect-ratio: auto; }
+  .case__media .case__img { aspect-ratio: 16 / 9; object-fit: cover; }
+  .case__badges { position: static; padding: 10px 10px 4px; flex-wrap: wrap; justify-content: flex-start; align-items: flex-start; }
+  .case__badge-stack, .case__badge-metric { white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+
   /* ROI 2x2: колонки грида не должны раздуваться длинными словами (на 320px давало горизонтальный скролл) */
   .profit__col { min-width: 0; }
 }
