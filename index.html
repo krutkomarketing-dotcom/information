@@ -16,13 +16,51 @@
 <meta property="og:site_name" content="KV-web">
 <meta data-i18n-content="meta.og-title" property="og:title" content="Создание сайтов в Беларуси от 3 дней">
 <meta data-i18n-content="meta.og-description" property="og:description" content="С 2018 года помогаем компаниям увеличить прибыль с помощью индивидуальных сайтов под ключ.">
-<meta property="og:image" content="img/5a64a498352c.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=Montserrat:wght@400..800&display=swap" rel="stylesheet">
+<meta property="og:image" content="https://kv-web.by/img/5a64a498352c.webp">
+<meta property="og:url" content="https://kv-web.by/">
+<link rel="canonical" href="https://kv-web.by/">
+<link rel="preload" href="fonts/montserrat-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css?v=20260914">
 <script>document.documentElement.classList.add('js')</script>
-<link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="style.css?v=20260914">
+<script src="vendor/three.min.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://kv-web.by/#org",
+      "name": "KV-web",
+      "url": "https://kv-web.by/",
+      "logo": "https://kv-web.by/img/5a64a498352c.webp",
+      "foundingDate": "2018",
+      "description": "Маркетинговое агентство полного цикла: создание сайтов, интернет-магазинов, iOS-приложений и Telegram Mini Apps, SEO и реклама.",
+      "areaServed": ["BY", "RU", "KZ", "AE", "US", "GB", "DE"],
+      "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "telephone": "+375290000000", "email": "info@kv-web.ru", "availableLanguage": ["ru", "en"] }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kv-web.by/#site",
+      "url": "https://kv-web.by/",
+      "name": "KV-web",
+      "inLanguage": ["ru", "en"],
+      "publisher": { "@id": "https://kv-web.by/#org" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Почему ваши сайты стоят так дорого?", "acceptedAnswer": { "@type": "Answer", "text": "В цену входит не только вёрстка, но и весь цикл: анализ ниши и конкурентов, прототип, копирайт по 4U, индивидуальный дизайн, адаптив, подключение форм и аналитики, базовое SEO." } },
+        { "@type": "Question", "name": "Что входит в полный комплекс услуг?", "acceptedAnswer": { "@type": "Answer", "text": "Маркетинговый анализ, прототип и структура, продающие тексты, дизайн, чистая адаптивная вёрстка, мобильная адаптация, интеграция с CRM, веб-аналитика, служебные страницы, базовая SEO-оптимизация и техподдержка первый месяц." } },
+        { "@type": "Question", "name": "Сколько будет стоить мой сайт?", "acceptedAnswer": { "@type": "Answer", "text": "Лендинг — от 1 390 BYN, конверсионный сайт для бизнеса — от 2 240 BYN, PRO-пакет — от 3 360 BYN. Точная сумма зависит от количества блоков, сложности дизайна и функционала." } },
+        { "@type": "Question", "name": "А если мне не понравится дизайн сайта, который вы сделаете?", "acceptedAnswer": { "@type": "Answer", "text": "До отрисовки мы согласуем 1–2 варианта стилистики, поэтому направление вы утверждаете до основной работы. Правки внутри согласованной концепции входят в стоимость." } },
+        { "@type": "Question", "name": "В каком формате происходит оплата услуг?", "acceptedAnswer": { "@type": "Answer", "text": "По договору, двумя частями: предоплата на старте и остаток после сдачи проекта. Работаем с физлицами, ИП и юрлицами, закрывающие документы предоставляем." } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -278,7 +316,7 @@
               <p data-i18n="quiz.udobnyy-messendzher-dlya-svyazi" class="quiz__q">Удобный мессенджер для связи</p>
               <label class="opt"><input type="checkbox" name="Мессенджер" value="Telegram"><span class="opt__box"></span><span class="opt__txt">Telegram</span></label>
               <label class="opt"><input type="checkbox" name="Мессенджер" value="WhatsApp"><span class="opt__box"></span><span class="opt__txt">WhatsApp</span></label>
-              <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent consent--dark">Отправляя форму, вы соглашаетесь на <a href="#contacts">обработку персональных данных</a></p>
+              <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent consent--dark">Отправляя форму, вы соглашаетесь на <a href="privacy.html" data-i18n-href="link.privacy">обработку персональных данных</a></p>
             </div>
           </div>
         </fieldset>
@@ -613,7 +651,7 @@
               <div class="case__body">
                 <h3 data-i18n="types.coolav-by-autora-avtomobilnyy" class="case__title">coolav.by &amp; autora — Автомобильный маркетплейс и классифайд Беларуси</h3>
                 <p data-i18n="types.vysokonagruzhennyy-avtomobilnyy-portal-i" class="case__desc">
-                  Высоконагруженный автомобильный портал и нативное iOS-приложение (autora) из репозиториев moggerrescure и Borisserz: моментальные фасетные фильтры по маркам, городам и пробегу, интеграция базы проверки истории авто по VIN, онлайн-расчет автокредита в BYN и защищенные чаты покупателя с продавцом.
+                  Высоконагруженный автомобильный портал и нативное iOS-приложение autora: моментальные фасетные фильтры по маркам, городам и пробегу, интеграция базы проверки истории авто по VIN, онлайн-расчет автокредита в BYN и защищенные чаты покупателя с продавцом.
                 </p>
                 <div class="case__result">
                   <span class="case__result-icon">🚗</span>
@@ -649,7 +687,7 @@
               <div class="case__body">
                 <h3 data-i18n="types.fitrpg-fitnes-rpg-igra" class="case__title">FitRPG — Фитнес-RPG игра на iOS и Web (GitHub Pages)</h3>
                 <p data-i18n="types.geymifitsirovannaya-platforma-motivatsii-z" class="case__desc">
-                  Геймифицированная платформа мотивации здорового образа жизни в репозиториях Boris Serzhanovich и moggerrescure (rpg-fitness): реальные шаги и подходы в зале конвертируются в опыт персонажа (Elara Warrior), прокачку экипировки и рейдовые битвы с теневыми боссами. Кроссплатформенная веб-витрина на GitHub Pages и нативное приложение с HealthKit.
+                  Геймифицированная платформа мотивации здорового образа жизни: реальные шаги и подходы в зале конвертируются в опыт персонажа (Elara Warrior), прокачку экипировки и рейдовые битвы с теневыми боссами. Кроссплатформенная веб-витрина на GitHub Pages и нативное приложение с HealthKit.
                 </p>
                 <div class="case__result">
                   <span class="case__result-icon">⚔️</span>
@@ -685,7 +723,7 @@
               <div class="case__body">
                 <h3 data-i18n="types.ai-workout-coach-pose" class="case__title">AI Workout Coach &amp; Pose Tracker — Силовой трекер с компьютерным зрением</h3>
                 <p data-i18n="types.nativnoe-ios-i-watchos" class="case__desc">
-                  Нативное iOS и watchOS приложение для атлетов в App Store (Borisserz): компьютерное зрение CoreML отслеживает скелетную кинематику в реальном времени во время приседаний и жима, контролирует глубину седа и скорость штанги (VBT), а встроенный AI-коуч на базе Gemini подсказывает корректировки техники голосом прямо в наушники.
+                  Нативное iOS и watchOS приложение для атлетов в App Store: компьютерное зрение CoreML отслеживает скелетную кинематику в реальном времени во время приседаний и жима, контролирует глубину седа и скорость штанги (VBT), а встроенный AI-коуч на базе Gemini подсказывает корректировки техники голосом прямо в наушники.
                 </p>
                 <div class="case__result">
                   <span class="case__result-icon">🏋️‍♂️</span>
@@ -955,7 +993,7 @@
             <label class="opt"><input type="checkbox" name="Мессенджер" value="Telegram"><span class="opt__box"></span><span class="opt__txt">Telegram</span></label>
             <label class="opt"><input type="checkbox" name="Мессенджер" value="WhatsApp"><span class="opt__box"></span><span class="opt__txt">WhatsApp</span></label>
           </div>
-          <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent">Отправляя форму, вы соглашаетесь на <a href="#contacts">обработку персональных данных</a></p>
+          <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent">Отправляя форму, вы соглашаетесь на <a href="privacy.html" data-i18n-href="link.privacy">обработку персональных данных</a></p>
           <button data-i18n="audit.poluchit-audit-sayta" class="btn btn--lime btn--lg" type="submit">Получить аудит сайта</button>
           <p class="formmsg" role="status" aria-live="polite"></p>
         </form>
@@ -974,32 +1012,32 @@
         <p data-i18n="promo.nasha-glavnaya-tsel-eto">Наша главная цель — это долгосрочное сотрудничество с вами, но мы понимаем, что для этого нужно <b>в первую очередь обеспечить вас продажами</b>, поэтому мы не только создаём продающие сайты в Беларуси, но и продвигаем их в интернете</p>
       </div>
 
-      <article class="scard">
+      <article class="scard" data-lang-only="ru">
         <img class="scard__ico" src="img/e9f0179d5488.webp" width="71" height="71" alt="" loading="lazy" decoding="async">
         <h3 data-i18n="promo.prodvizhenie-sayta-na-yandeks">Продвижение сайта на Яндекс</h3>
         <p data-i18n="promo.uvelichivaem-kolichestvo-posetiteley-vashe">Увеличиваем количество посетителей вашего сайта из поисковых систем Яндекс</p>
-        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Подробнее</a>
+        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Обсудить задачу</a>
       </article>
 
       <article class="scard">
         <img class="scard__ico" src="img/443ac8e852b2.webp" width="71" height="71" alt="" loading="lazy" decoding="async">
         <h3 data-i18n="promo.prodvizhenie-sayta-na-google">Продвижение сайта на Google</h3>
         <p data-i18n="promo.vyvodim-vashi-zaprosy-v">Выводим ваши запросы в топ-10 с помощью проверенных инструментов SEO оптимизации</p>
-        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Подробнее</a>
+        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Обсудить задачу</a>
       </article>
 
       <article class="scard">
         <img class="scard__ico" src="img/f7fa62946246.webp" width="71" height="71" alt="" loading="lazy" decoding="async">
         <h3 data-i18n="top.kontekstnaya-reklama">Контекстная реклама</h3>
         <p data-i18n="promo.ne-tolko-povysim-uznavaemost">Не только повысим узнаваемость бренда, но и покажем предложение вашему целевому покупателю</p>
-        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Подробнее</a>
+        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Обсудить задачу</a>
       </article>
 
       <article class="scard">
         <img class="scard__ico" src="img/7186ad084cd9.webp" width="71" height="71" alt="" loading="lazy" decoding="async">
         <h3 data-i18n="quiz.targetirovannaya-reklama">Таргетированная реклама</h3>
         <p data-i18n="promo.samyy-bystryy-sposob-privlecheniya">Самый быстрый способ привлечения трафика на сайт — начните получать первые заявки</p>
-        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Подробнее</a>
+        <a data-i18n="promo.podrobnee" class="btn btn--lime btn--xs" href="#offer">Обсудить задачу</a>
       </article>
     </div>
   </div>
@@ -1108,7 +1146,7 @@
             <input data-i18n-placeholder="quiz.placeholder.nomer-telefona" class="fld" type="tel" name="Телефон" placeholder="Номер телефона" autocomplete="tel" required>
             <input data-i18n-placeholder="quiz.placeholder.vashe-imya" class="fld" type="text" name="Имя" placeholder="Ваше имя" autocomplete="name" required>
           </div>
-          <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent">Отправляя форму, вы соглашаетесь на <a href="#contacts">обработку персональных данных</a></p>
+          <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent">Отправляя форму, вы соглашаетесь на <a href="privacy.html" data-i18n-href="link.privacy">обработку персональных данных</a></p>
           <button data-i18n="offer.otpravit-predlozhenie" class="btn btn--orange btn--lg" type="submit">Отправить предложение</button>
           <p class="formmsg" role="status" aria-live="polite"></p>
         </form>
@@ -2023,7 +2061,7 @@
         <input data-i18n-placeholder="quiz.placeholder.vashe-imya" class="fld fld--light" type="text" name="Имя" placeholder="Ваше имя" autocomplete="name" required>
         <input data-i18n-placeholder="quiz.placeholder.nomer-telefona" class="fld fld--light" type="tel" name="Телефон" placeholder="Номер телефона" autocomplete="tel" required>
         <button data-i18n="cta.svyazhites-so-mnoy" class="btn btn--orange" type="submit">Свяжитесь со мной</button>
-        <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent consent--muted">Отправляя форму, вы соглашаетесь на <a href="#contacts">обработку персональных данных</a></p>
+        <p data-i18n="quiz.otpravlyaya-formu-vy-soglashaetes" class="consent consent--muted">Отправляя форму, вы соглашаетесь на <a href="privacy.html" data-i18n-href="link.privacy">обработку персональных данных</a></p>
         <p class="formmsg" role="status" aria-live="polite"></p>
       </form>
     </div>
@@ -2117,15 +2155,15 @@
     </div>
 
     <div class="footer__bottom">
-      <a data-i18n="contacts.sayt-ne-yavlyaetsya-publichnoy" href="#contacts">Сайт не является публичной офертой</a>
-      <a data-i18n="contacts.politika-konfidentsialnosti" href="#contacts">Политика конфиденциальности</a>
-      <a data-i18n="contacts.karta-sayta" href="#contacts">Карта сайта</a>
+      <a data-i18n="contacts.sayt-ne-yavlyaetsya-publichnoy">Сайт не является публичной офертой</a>
+      <a data-i18n="contacts.politika-konfidentsialnosti" data-i18n-href="link.privacy" href="privacy.html">Политика конфиденциальности</a>
+      <a data-i18n="contacts.karta-sayta" href="sitemap.xml">Карта сайта</a>
     </div>
   </div>
 </footer>
 
-<script src="i18n/en.js?v=1" defer></script>
-<script src="i18n.js?v=1" defer></script>
-<script src="script.js?v=20260908_4" defer></script>
+<script src="i18n/en.js?v=20260914" defer></script>
+<script src="i18n.js?v=20260914" defer></script>
+<script src="script.js?v=20260914" defer></script>
 </body>
 </html>

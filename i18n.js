@@ -65,7 +65,7 @@
   window.TD = TD;
 
   /* ---------- применение к DOM ---------- */
-  var ATTRS = ['alt', 'placeholder', 'title', 'aria-label', 'data-hint', 'content'];
+  var ATTRS = ['alt', 'placeholder', 'title', 'aria-label', 'data-hint', 'content', 'href'];
 
   function setText(el, value) {
     if (value.indexOf('<') !== -1) { el.innerHTML = value; return; }

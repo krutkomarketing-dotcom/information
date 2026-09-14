@@ -3005,3 +3005,24 @@ main>section{padding-block:0 var(--sec)}
   .case__badge-stack { font-size: 11px; }
   .case__badge-metric { font-size: 10.5px; }
 }
+
+/* ---------- EN: без карточки «Яндекс» интро занимает всю первую строку, три карточки — вторую ---------- */
+html[lang="en"] .promo__intro{grid-column:span 3}
+@media (max-width:1024px){ html[lang="en"] .promo__intro{grid-column:span 2} }
+
+/* ---------- компактные телефоны: тарифная карточка шире, маскот FAQ не тратит экран ---------- */
+@media (max-width:360px){ .plan{flex-basis:90%;max-width:none} }
+@media (max-width:480px){ .faq__pic{display:none} }
+
+/* ---------- служебные страницы (политика конфиденциальности) ---------- */
+.legal{padding:32px 0 var(--sec)}
+.legal__card{background:#fff;border-radius:var(--r-card);padding:clamp(28px,5vw,64px);max-width:860px;margin:0 auto}
+.legal__card h1{font-size:clamp(26px,3.4vw,40px);margin-bottom:8px}
+.legal__card .legal__date{color:rgba(32,32,32,.55);font-size:14px;margin-bottom:28px}
+.legal__card h2{font-size:clamp(18px,2vw,22px);margin:32px 0 10px}
+.legal__card p,.legal__card li{font-size:16px;line-height:1.6;margin-bottom:10px}
+.legal__card ul{padding-left:20px;list-style:disc}
+.legal__card a{color:var(--blue)}
+.legal__card .legal__todo{background:#FFF4E5;border-left:4px solid var(--orange);padding:12px 16px;border-radius:8px}
+.legal__back{display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:600;text-decoration:none;color:#fff}
+.legal__lang{float:right;font-weight:600}

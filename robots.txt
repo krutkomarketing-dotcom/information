@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /i18n/
+Disallow: /vendor/
+
+Sitemap: https://kv-web.by/sitemap.xml

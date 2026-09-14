@@ -1508,7 +1508,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Текстура глобуса (натуральная фотореалистичная гео-карта Земли высокой четкости)
     const textureLoader = new THREE.TextureLoader();
-    const texturePath = (window.location.pathname.includes('/landing/') ? '' : 'landing/') + 'img/globe-texture.png?v=true_earth_v10';
+    const texturePath = 'img/globe-texture.png?v=true_earth_v10';
     const globeTexture = textureLoader.load(texturePath, (t) => {
       t.minFilter = THREE.LinearMipmapLinearFilter;
       t.magFilter = THREE.LinearFilter;
