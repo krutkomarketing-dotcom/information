@@ -2374,6 +2374,7 @@ main>section{padding-block:0 var(--sec)}
 .cta__txt{font-family:'Montserrat',var(--body);font-weight:500;font-size:clamp(20px,2.2vw,26px);line-height:1.23;letter-spacing:.03em;color:#3D3D3D}
 .cta__form{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
 .cta__form .fld{flex:1 1 200px}
+.cta__form .fld--area{flex:1 0 100%;margin-bottom:0;min-height:96px}   /* сообщение — отдельной строкой на всю ширину */
 .cta__form .btn{margin-top:0;min-height:60px;flex:0 0 auto}
 .cta__form .consent{flex:1 0 100%;margin-top:0}
 .cta__form .formmsg{flex:1 0 100%;color:var(--orange-dk)}
