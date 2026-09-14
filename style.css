@@ -39,8 +39,8 @@
   --purple:#7574FF;
   --white:#fff;
 
-  --head:'Artegra Sans Extended','Archivo','Exo 2',system-ui,sans-serif;
-  --body:'Mont','Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --head:'Amp','Artegra Sans Extended','Archivo','Exo 2',system-ui,sans-serif;   /* 'Amp' — только символ & (fonts.css) */
+  --body:'Amp','Mont','Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
 
   /* три ширины контента, как в макете:
      1160 — базовая сетка секций, 1270 — шапка/герой/клиенты, 1360 — широкие карточки */
@@ -3009,6 +3009,7 @@ main>section{padding-block:0 var(--sec)}
 /* ---------- EN: без карточки «Яндекс» интро занимает всю первую строку, три карточки — вторую ---------- */
 html[lang="en"] .promo__intro{grid-column:span 3}
 @media (max-width:1024px){ html[lang="en"] .promo__intro{grid-column:span 2} }
+@media (max-width:768px){ html[lang="en"] .promo__intro{grid-column:auto} }   /* сетка в одну колонку — span ломает её */
 
 /* ---------- компактные телефоны: тарифная карточка шире, маскот FAQ не тратит экран ---------- */
 @media (max-width:360px){ .plan{flex-basis:90%;max-width:none} }
@@ -3026,3 +3027,20 @@ html[lang="en"] .promo__intro{grid-column:span 3}
 .legal__card .legal__todo{background:#FFF4E5;border-left:4px solid var(--orange);padding:12px 16px;border-radius:8px}
 .legal__back{display:inline-flex;align-items:center;gap:8px;margin-bottom:20px;font-weight:600;text-decoration:none;color:#fff}
 .legal__lang{float:right;font-weight:600}
+
+/* ---------- мобилка: фильтры и табы переносами, а не горизонтальной лентой с затуханием ----------
+   Лента с mask-image обрезала второй чип и выглядела сломанной. Теперь всё видно сразу. */
+@media (max-width: 768px) {
+  .chips, .world__filter {
+    flex-wrap: wrap; overflow: visible; scroll-snap-type: none;
+    -webkit-mask-image: none; mask-image: none;
+    margin-inline: 0; padding-inline: 0; padding-bottom: 0; gap: 8px;
+  }
+  .chip { padding: 9px 14px; min-height: 40px; font-size: 13px; white-space: normal; text-align: center; line-height: 1.2; }
+  .wtab { white-space: normal; text-align: center; }
+  .ptabs {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; overflow: visible; scroll-snap-type: none;
+    -webkit-mask-image: none; mask-image: none; margin-inline: 0; padding-inline: 0; padding-bottom: 0; margin-bottom: 28px;
+  }
+  .ptab { white-space: normal; text-align: center; min-height: 48px; padding: 8px 10px; font-size: 13px; line-height: 1.2; }
+}
