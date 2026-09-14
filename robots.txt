@@ -3,4 +3,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://borisserz.github.io/information/sitemap.xml
+Sitemap: https://moggerrescure.github.io/information/sitemap.xml

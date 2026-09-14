@@ -67,7 +67,7 @@ python -m http.server 8123
 
 | Что | Где | Сейчас |
 |---|---|---|
-| Домен | `index.html` (canonical, og:url, og:image, JSON-LD), `sitemap.xml`, `robots.txt`, `privacy*.html` | `https://borisserz.github.io/information` — если переедете на свой домен, заменить поиском по файлам |
+| Домен | `index.html` (canonical, og:url, og:image, JSON-LD), `sitemap.xml`, `robots.txt`, `privacy*.html` | `https://moggerrescure.github.io/information` — если переедете на свой домен, заменить поиском по файлам |
 | Контакты | `script.js` → `CONTACT`, подвал и панель в `index.html`, JSON-LD | реальные: +375 (29) 252-80-43, krutko.marketing@gmail.com, @sq_dbl |
 | Куда падают заявки | `script.js` → `FORM_CONFIG.ENDPOINT` | Cloudflare Worker `kv-web-leads` (см. раздел ниже) |
 | Реквизиты оператора | `privacy.html`, `privacy-en.html` | блоки `[в скобках]` |
