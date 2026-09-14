@@ -3012,7 +3012,7 @@ html[lang="en"] .promo__intro{grid-column:span 3}
 @media (max-width:768px){ html[lang="en"] .promo__intro{grid-column:auto} }   /* сетка в одну колонку — span ломает её */
 
 /* ---------- компактные телефоны: тарифная карточка шире, маскот FAQ не тратит экран ---------- */
-@media (max-width:360px){ .plan{flex-basis:90%;max-width:none} }
+
 @media (max-width:480px){ .faq__pic{display:none} }
 
 /* ---------- служебные страницы (политика конфиденциальности) ---------- */
@@ -3043,4 +3043,14 @@ html[lang="en"] .promo__intro{grid-column:span 3}
     -webkit-mask-image: none; mask-image: none; margin-inline: 0; padding-inline: 0; padding-bottom: 0; margin-bottom: 28px;
   }
   .ptab { white-space: normal; text-align: center; min-height: 48px; padding: 8px 10px; font-size: 13px; line-height: 1.2; }
+}
+
+/* ---------- мобилка: тарифы и карточки команды — вертикально, а не свайп-лентой с «выглядыванием» ----------
+   Лента обрезала соседнюю карточку и без тач-свайпа не прокручивалась. */
+@media (max-width: 768px) {
+  .plans, .founders__grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px; overflow: visible; scroll-snap-type: none;
+    margin-inline: 0; padding: 8px 0 4px; max-width: 520px; margin-inline: auto;
+  }
+  .plan, .founder-card { flex: none; max-width: none; width: 100%; scroll-snap-align: none; }
 }
