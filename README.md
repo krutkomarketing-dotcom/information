@@ -67,36 +67,43 @@ python -m http.server 8123
 
 | Что | Где | Сейчас |
 |---|---|---|
-| Домен | `index.html` (canonical, og:url, og:image, JSON-LD), `sitemap.xml`, `robots.txt`, `privacy*.html` | `https://kv-web.by` — заменить поиском по файлам |
-| Телефон | `index.html` (подвал, мобильная кнопка `tel:`, JSON-LD), `script.js` (текст ошибки формы), `i18n/en.js` (`form.fail`) | `+375 (29) 000-00-00` |
-| Email | `index.html` (подвал, JSON-LD) | `info@kv-web.ru` |
-| Соцсети | `index.html`, подвал `.socials` | ссылки ведут на `#contacts` |
-| Куда падают заявки | `script.js` → `FORM_CONFIG.ENDPOINT` | пусто — формы пишут в консоль |
+| Домен | `index.html` (canonical, og:url, og:image, JSON-LD), `sitemap.xml`, `robots.txt`, `privacy*.html` | `https://borisserz.github.io/information` — если переедете на свой домен, заменить поиском по файлам |
+| Контакты | `script.js` → `CONTACT`, подвал и панель в `index.html`, JSON-LD | реальные: +375 (29) 252-80-43, krutko.marketing@gmail.com, @sq_dbl |
+| Куда падают заявки | `script.js` → `FORM_CONFIG.ENDPOINT` | Cloudflare Worker `kv-web-leads` (см. раздел ниже) |
 | Реквизиты оператора | `privacy.html`, `privacy-en.html` | блоки `[в скобках]` |
 | Логотипы клиентов | `index.html`, `.clients__grid` | пустые `alt` — вписать названия |
 
 После замены поднять версию `?v=` у `style.css`, `script.js`, `i18n.js`, `i18n/en.js` в `index.html`.
 
-## Куда падают заявки — НАСТРОИТЬ
+## Куда падают заявки
 
-Единственное место, которое нужно тронуть: `FORM_CONFIG` в начале `script.js`.
+Контакты на странице: `+375 (29) 252-80-43`, `krutko.marketing@gmail.com`,
+[Telegram @sq_dbl](https://t.me/sq_dbl), [WhatsApp](https://wa.me/375292528043).
 
-Пока `ENDPOINT` пустой, все 4 формы проверяют поля, показывают «спасибо»
-и пишут содержимое заявки в консоль браузера (F12) — но никуда не отправляют.
+Все 4 формы (квиз, аудит, «на своих условиях», нижняя заявка) проверяют телефон
+и отправляют письмо. Пока `ENDPOINT` в `script.js` пустой, письмо идёт через
+[FormSubmit](https://formsubmit.co) на `krutko.marketing@gmail.com`.
+Первая заявка не дойдёт, пока в этом ящике не нажать ссылку подтверждения
+от FormSubmit.
 
-Варианты:
+Чтобы заявка сама падала и на почту, и в Telegram, задеплойте `worker/`:
 
-| Способ | Что вписать |
-|---|---|
-| Свой обработчик на хостинге | `ENDPOINT: '/send.php'`, `MODE: 'json'` |
-| Сервис форм (formspree и т.п.) | `ENDPOINT: 'https://formspree.io/f/xxxx'`, `MODE: 'json'` |
-| Telegram-бот | `ENDPOINT: 'https://api.telegram.org/bot<ТОКЕН>/sendMessage'`, `MODE: 'telegram'`, `CHAT_ID: '...'` |
+```bash
+cd worker
+npx wrangler login
+npx wrangler secret put TELEGRAM_BOT_TOKEN
+npx wrangler secret put TELEGRAM_CHAT_ID
+npx wrangler secret put WEB3FORMS_ACCESS_KEY
+npx wrangler deploy
+```
 
-Про Telegram: токен бота будет виден в коде страницы, его сможет прочитать любой
-посетитель. Для боевого сайта лучше свой обработчик на сервере.
+URL воркера впишите в `FORM_CONFIG.ENDPOINT` в `script.js`. Секреты в репозиторий
+не кладутся. Токен бота на странице не светится.
 
-Формы на странице: квиз (5 шагов), «Проведём аудит вашего сайта»,
-«Создайте сайт на своих условиях», нижняя быстрая заявка.
+WhatsApp с сайта сам заявку не получает: это кнопка «написать». Push в WhatsApp
+нужен платный Business API, его здесь нет.
+
+Проверка логики воркера и ссылок: `node --test worker/lead.test.mjs test/contact-links.test.mjs`.
 
 ## Шрифты
 
@@ -106,8 +113,8 @@ python -m http.server 8123
 - заголовки — **Archivo** (переменная ширина, `font-stretch: 112%`)
 - текст — **Montserrat**
 
-Если купите оригиналы: положите `.woff2` в `landing/fonts/`, раскомментируйте
-блок `@font-face` в начале `style.css`. Имена семейств в стилях уже прописаны
+Шрифты лежат локально в `fonts/` (`fonts/fonts.css`). Если купите оригиналы: положите `.woff2` туда же
+и допишите `@font-face` в `fonts/fonts.css`. Имена семейств в стилях уже прописаны
 первыми — подхватится автоматически, больше править нечего.
 
 ## Цены
@@ -119,9 +126,8 @@ python -m http.server 8123
 
 ## Что осталось на вас
 
-- **Телефон** `+375 (29) 000-00-00` — плейсхолдер, заменить в подвале
-  (`index.html`, блок `.fcontact`) и в `script.js` (текст ошибки отправки).
-- **Ссылки соцсетей** в подвале ведут на `#contacts` — подставить реальные.
+- Подтвердить ящик `krutko.marketing@gmail.com` по письму FormSubmit, иначе заявки на почту не дойдут.
+- Задеплоить `worker/` и вписать URL в `FORM_CONFIG.ENDPOINT`, чтобы заявки приходили ещё и в Telegram.
 - **Фото Ромы Риндыча** в отзывах: в выгрузке из Figma этой картинки не было,
   стоит градиентная заглушка. Положите файл в `img/` и подставьте в первую
   карточку `.rev`.

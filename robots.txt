@@ -1,6 +1,6 @@
+# GitHub Pages отдаёт robots.txt только из корня домена (borisserz.github.io/robots.txt),
+# поэтому этот файл начнёт работать после переезда на свой домен. Sitemap подхватывается и так.
 User-agent: *
 Allow: /
-Disallow: /i18n/
-Disallow: /vendor/
 
-Sitemap: https://kv-web.by/sitemap.xml
+Sitemap: https://borisserz.github.io/information/sitemap.xml
