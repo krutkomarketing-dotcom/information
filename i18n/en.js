@@ -11,8 +11,8 @@
    ========================================================================== */
 window.I18N_EN = {
   __config: {
-    /* the EU tab / hubs are not shown on the English version */
-    hideHubRegions: ['eu']
+    /* regions of the globe hidden on the English version, e.g. ['eu']; empty = show everything */
+    hideHubRegions: []
   },
 
   /* ---------- <head> ---------- */
@@ -61,7 +61,7 @@ window.I18N_EN = {
   'hero.label.sroki-i-garantiya': 'Deadlines & guarantee',
   'hero.skorost': 'Speed',
   'hero.zapusk-ot-3-dney': 'Launch in 3+ days, no delays',
-  'hero.sroki-i-etapy-zhestko': 'Timelines and milestones are locked in the contract. No excuses: if we promised a release date, the site is live and tested on that date.',
+  'hero.sroki-i-etapy-zhestko': 'Timelines and milestones are agreed in writing before we start. No excuses: if we promised a release date, the site is live and tested on that date.',
   'hero.label.avtomatizatsiya-i-integratsii': 'Automation & integrations',
   'hero.integratsii': 'Integrations',
   'hero.podklyuchaem-vse-pod-klyuch': 'Everything wired up, turnkey',
@@ -308,7 +308,7 @@ window.I18N_EN = {
   'pricing.pro-biznes': 'PRO Business',
   'pricing.rynochnaya-4-200-byn': 'market $4,200',
   'pricing.ot-3-360-byn': 'from $3,360',
-  'pricing.tseny-ukazany-v-belorusskih': 'Prices are in USD and sit 20% below the average agency rate — no office or management overhead baked in. Every price is fixed in a formal contract.',
+  'pricing.tseny-ukazany-v-belorusskih': 'Prices are in USD and sit 20% below the average agency rate — no office or management overhead baked in. Every price is fixed in writing before work begins.',
   'pricing.market-prefix': 'market ',
   'pricing.price-fmt': 'from ${n}',
 
@@ -404,23 +404,23 @@ window.I18N_EN = {
   'about.nikakih-lishnih-natsenok-stoimost': 'No mark-ups. The price is calculated purely from the real hours senior engineers spend on your code.',
   'about.chistyy-ishodnyy-kod-v': 'Clean source code that you own',
   'about.proekt-na-100-prinadlezhit': 'The project is 100% yours: it loads in a fraction of a second, runs on any hosting and scales easily for years.',
-  'about.edinyy-tsentr-otvetstvennosti-i': 'One point of responsibility, one contract',
-  'about.ot-arhitektury-i-koda': 'From architecture and code to CRM integration and ad launch, one team is accountable. We work under a contract with clear deadlines.',
+  'about.edinyy-tsentr-otvetstvennosti-i': 'One point of responsibility, one agreement',
+  'about.ot-arhitektury-i-koda': 'From architecture and code to CRM integration and ad launch, one team is accountable. Scope and deadlines are agreed in writing.',
   'about.obsudite-zadachu-napryamuyu-s': 'Discuss your project directly with an engineer',
   'about.opishite-vash-proekt-my': 'Describe your project. No pushy sales talk — we’ll assess the technical complexity, suggest the right architecture and give you an honest quote.',
   'about.poluchit-inzhenernuyu-otsenku-proekta': 'Get an engineering estimate',
 
   /* ---------- standards & guarantees ---------- */
-  'standards.yuridicheskaya-zaschita-inzhenernyy-sla': 'Legal protection & engineering SLA • No hidden terms',
+  'standards.yuridicheskaya-zaschita-inzhenernyy-sla': 'Written guarantees & engineering SLA • No hidden terms',
   'standards.garantii-v-dogovore-i': 'Contract guarantees and quality standards for every release',
-  'standards.my-ne-pryachemsya-za': 'We don’t hide behind vague promises. Deadlines, a transparent quote and personal accountability are fixed in a formal contract, and code quality is backed by measurable engineering benchmarks.',
+  'standards.my-ne-pryachemsya-za': 'We don’t hide behind vague promises. Deadlines, a transparent quote and personal accountability are fixed in writing before we start, and code quality is backed by measurable engineering benchmarks.',
   'standards.finansovaya-garantiya-dedlayna': 'Financial deadline guarantee',
-  'standards.sroki-propisyvayutsya-v-kalendarnom': 'Deadlines are written into the contract schedule. For every day of delay on our side we refund 1% of the total project cost.',
+  'standards.sroki-propisyvayutsya-v-kalendarnom': 'Deadlines are fixed in the written project schedule. For every day of delay on our side we refund 1% of the total project cost.',
   'standards.0-dney-zaderzhki': '0 days late',
   'standards.po-13-poslednim-zapuschennym': 'across the last 13 releases',
   'standards.fiks-prays-v-akte': 'Fixed price on the invoice',
   'standards.fiksirovannaya-smeta-pod-klyuch': 'Fixed turnkey quote',
-  'standards.nikakih-vnezapnyh-doplat-za': 'No surprise “fees for revisions” or hidden charges within the agreed scope. The amount in the contract equals the amount on the final invoice.',
+  'standards.nikakih-vnezapnyh-doplat-za': 'No surprise “fees for revisions” or hidden charges within the agreed scope. The amount we agree on at the start equals the amount on the final invoice.',
   'standards.0-byn-pereplat': '$0 in overpayments',
   'standards.sverh-utverzhdennoy-stoimosti': 'above the approved price',
   'standards.100-vladenie-kodom-i': '100% ownership of code and rights',
@@ -436,17 +436,18 @@ window.I18N_EN = {
   'standards.chistaya-optimizatsiya-kriticheskogo-puti': 'Clean critical-rendering-path optimisation with no heavy builders or junk scripts.',
   'standards.bezopasnost-i-otkazoustoychivost': 'Security & resilience',
   'standards.ssl-a-shifrovanie-ekranirovanie': 'SSL A+ encryption, injection-safe forms, spam-bot protection, ready for peak loads of 10k+ visits per hour.',
-  'standards.100-yuridicheskaya-chistota': '100% legal clarity',
-  'standards.ofitsialnyy-dogovor-dlya-belarusi': 'A formal contract for every client: international invoices in USD/EUR, currency contracts and full closing documentation.',
+  'standards.100-yuridicheskaya-chistota': 'Clear payment terms',
+  'standards.ofitsialnyy-dogovor-dlya-belarusi': 'Scope, price and deadline are agreed in writing before we start. International clients pay by PayPal, card or crypto (USDT), in two instalments — no legal entity or bank transfer required on your side.',
+  'standards.legal-ready': 'Pay Anywhere',
   'standards.fundamentalnaya-seo-mikrorazmetka': 'Solid SEO structured data',
   'standards.validnaya-razmetka-schema-org': 'Valid Schema.org markup (Organization, Product, FAQ), OpenGraph tags for social media, auto-generated sitemap.xml and robots.txt.',
   'standards.pixel-perfect-adaptiv-pod': 'Pixel-perfect on every screen',
   'standards.testirovanie-na-18-realnyh': 'Tested on 18 real resolutions: from compact phones (360px) to 4K UltraWide monitors with Retina support.',
   'standards.bez-abonentskoy-platy': '✓ No subscription fees',
-  'standards.dokumenty-rb-rf-worldwide': '✓ Contracts & invoices worldwide',
-  'standards.edo-i-zakryvayuschie-akty': '✓ E-signature & closing documents',
-  'standards.zafiksiruyte-stoimost-i-usloviya': 'Lock in your price and terms in a contract',
-  'standards.obsudite-zadachu-s-veduschim': 'Talk to the lead engineer. We’ll prepare a draft contract with a transparent quote and a firm deadline.',
+  'standards.dokumenty-rb-rf-worldwide': '✓ PayPal, cards & crypto accepted',
+  'standards.edo-i-zakryvayuschie-akty': '✓ Written scope & fixed price',
+  'standards.zafiksiruyte-stoimost-i-usloviya': 'Lock in your price and terms in writing',
+  'standards.obsudite-zadachu-s-veduschim': 'Talk to the lead engineer. We’ll prepare a written proposal with a transparent quote and a firm deadline.',
   'standards.poluchit-proekt-s-garantiey': 'Get a guaranteed project',
 
   /* ---------- FAQ ---------- */
@@ -460,7 +461,7 @@ window.I18N_EN = {
   'faq.a-esli-mne-ne': 'What if I don’t like the design?',
   'faq.do-otrisovki-my-soglasuem': 'Before full design we agree on 1–2 style directions, so you approve the direction before the main work starts. Revisions within the approved concept are included.',
   'faq.v-kakom-formate-proishodit': 'How does payment work?',
-  'faq.po-dogovoru-dvumya-chastyami': 'Under a contract, in two instalments: a deposit at the start and the balance on delivery. We work with individuals and companies and provide full closing documents.',
+  'faq.po-dogovoru-dvumya-chastyami': 'In two instalments: a deposit to start and the balance on delivery. We accept PayPal, cards and crypto (USDT) — convenient for clients anywhere in the world. Scope, price and deadline are fixed in writing before work begins.',
   'faq.label.interaktivnaya-illyustratsiya-konsultant': 'Interactive illustration: a consultant answering questions',
 
   /* ---------- ROI ---------- */
@@ -509,8 +510,8 @@ window.I18N_EN = {
 
   /* ---------- geography / globe ---------- */
   'geography.my-sozdaem-sayty-po': 'We build websites all over the world',
-  'geography.interaktivnyy-3d-globus-prisutstviya': 'An interactive 3D globe of our footprint: explore key cities and digital hubs across the Middle East, Asia, North America and the CIS. Spin the planet and pick a city.',
-  'geography.3d-globus-20-mirovyh': '<b>3D globe</b> • 15+ cities worldwide',
+  'geography.interaktivnyy-3d-globus-prisutstviya': 'An interactive 3D globe of our footprint: explore key cities and digital hubs across Europe, the Middle East, North America and the CIS. Spin the planet and pick a city.',
+  'geography.3d-globus-20-mirovyh': '<b>3D globe</b> • 20+ cities worldwide',
   'geography.label.bystryy-vybor-gorodov': 'Quick city selection',
   'geography.vse-goroda-360': 'All cities (360°)',
   'geography.minsk-hq': 'Minsk (HQ)',
@@ -543,7 +544,7 @@ window.I18N_EN = {
   'geography.shtab-kvartira-kv-web': 'KV-web headquarters. Our centre for web development, design and end-to-end analytics. 50+ projects.',
   'geography.zazhmite-i-potyanite-mysh': 'Click and drag (or swipe) to rotate the globe',
   'geography.label.statistika-ohvata': 'Reach statistics',
-  'geography.15-stran': '10+ countries',
+  'geography.15-stran': '15+ countries',
   'geography.ohvat-mirovyh-rynkov': 'Global market reach',
   'geography.65-saytov': '65+ websites',
   'geography.realizovano-pod-klyuch': 'Delivered turnkey',
@@ -724,7 +725,7 @@ window.I18N_EN = {
     london:       { name: 'London', country: 'United Kingdom', tag: '🚀 Western Europe', desc: 'Fintech services, SaaS platforms and secure client portals built to European standards.', caseStudy: 'A client area for a financial platform with an interactive yield calculator and Open Banking API.' },
     paris:        { name: 'Paris', country: 'France', tag: '🎨 France', desc: 'Brand websites, premium interfaces and promo pages for European brands.', caseStudy: 'A brand site for an architecture studio with an interactive 3D project catalogue.' },
     berlin:       { name: 'Berlin', country: 'Germany', tag: '💡 Germany', desc: 'Web apps and promo sites for European tech startups.', caseStudy: 'A startup showcase platform with an interactive 3D product configurator.' },
-    warsaw:       { name: 'Warsaw', country: 'Poland', tag: '🇪🇺 Central Europe', desc: 'European portals, multilingual catalogues and EU CRM integrations.', caseStudy: 'An equipment rental service with automatic pricing and full GDPR compliance.' },
+    warsaw:       { name: 'Warsaw', country: 'Poland', badge: 'Portals & Catalogues', tag: '🇪🇺 Central Europe', desc: 'European portals, multilingual catalogues and CRM integrations.', caseStudy: 'An equipment rental service with automatic pricing, built GDPR-ready.' },
     stockholm:    { name: 'Stockholm', country: 'Sweden', tag: '❄️ Scandinavia', desc: 'Minimal, high-performance web services for the Nordic market.', caseStudy: 'A B2B analytics service with an accessible interface built to WCAG standards.' },
     milan:        { name: 'Milan', country: 'Italy', tag: '🏛️ Southern Europe', desc: 'Premium online stores, fashion catalogues and booking services.', caseStudy: 'An exclusive designer-furniture store with a multi-currency cart.' },
     barcelona:    { name: 'Barcelona', country: 'Spain', tag: '☀️ Iberia', desc: 'Booking portals, media projects and multilingual platforms for southern Europe.', caseStudy: 'A booking platform for premium yachts and apartments with a live availability calendar.' },
