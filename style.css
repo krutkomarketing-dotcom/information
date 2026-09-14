@@ -2625,23 +2625,34 @@ main>section{padding-block:0 var(--sec)}
     50% { transform: scale(1.18); box-shadow: 0 0 0 7px rgba(255, 105, 21, 0); }
   }
 
-  /* Мобильные всплывающие карточки ховера: строго по центру без вылета за экран */
+  /* Мобильные всплывающие карточки ховера: по центру точки, но не вылетают за сцену.
+     Закрытые карточки убраны из потока (display:none) — иначе они расширяют layout-viewport
+     и страница получает горизонтальный скролл. Сдвиг --pop-shift ставит script.js (fitPop). */
   .hero-spot__pop {
+    display: none;
     position: absolute;
     left: 50% !important;
     right: auto !important;
     top: auto !important;
     bottom: -15px !important;
-    transform: translateX(-50%) translateY(10px) !important;
+    transform: translateX(calc(-50% + var(--pop-shift, 0px))) !important;
     width: min(290px, calc(100vw - 36px)) !important;
     padding: 12px 14px;
     border-radius: 14px;
     z-index: 100;
+    animation: heroPopIn .22s var(--ease-out-quart);
   }
   .hero-spot:hover .hero-spot__pop,
   .hero-spot.is-open .hero-spot__pop,
   .hero-spot:focus-visible .hero-spot__pop {
-    transform: translateX(-50%) translateY(0) !important;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(calc(-50% + var(--pop-shift, 0px))) !important;
+  }
+  @keyframes heroPopIn {
+    from { opacity: 0; transform: translateX(calc(-50% + var(--pop-shift, 0px))) translateY(10px); }
+    to   { opacity: 1; transform: translateX(calc(-50% + var(--pop-shift, 0px))) translateY(0); }
   }
 
   /* Квиз: варианты ответов в 2 столбца (тактильные карточки-плитки без тесных кружков) */
@@ -2939,3 +2950,48 @@ main>section{padding-block:0 var(--sec)}
   .wpin__ripple,.world__badge-dot,.arc-line{animation:none!important}
 }
 
+
+/* ---------- переключатель языка RU / EN (i18n.js) ---------- */
+.langsw{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:var(--r-pill);background:var(--lilac);flex:0 0 auto}
+.langsw__btn{border:0;background:none;cursor:pointer;font:700 13px/1 var(--body);letter-spacing:.06em;color:var(--ink);padding:9px 12px;border-radius:var(--r-pill);transition:background .2s var(--ease),color .2s var(--ease)}
+.langsw__btn:hover{color:var(--blue)}
+.langsw__btn.is-on{background:var(--blue);color:#fff}
+@media (max-width:1024px){
+  .navbar .langsw{order:2;margin-left:auto}
+  .navbar .burger{order:3;margin-left:0}
+}
+@media (max-width:480px){
+  .langsw__btn{padding:8px 10px;font-size:12px}
+}
+
+/* ---------- мобильные правки (аудит 2026-09): переполнение, тап-цели, читаемость ---------- */
+@media (max-width: 768px) {
+  /* EN-вариант подсказки над иллюстрацией (RU задан выше через content) */
+  html[lang="en"] .hero-cue__txt::after { content: "Tap on us 👆"; }
+
+  /* Тултип «?» в квизе: кнопка стоит у правого края строки, поэтому облако прижимаем к её правому краю,
+     иначе оно уезжает на 130px за экран и растягивает layout-viewport */
+  .hint { width: 32px; height: 32px; font-size: 14px; }
+  .hint::after { left: auto; right: 0; transform: none; width: min(260px, calc(100vw - 48px)); }
+
+  /* тап-цели не меньше 44px: ссылки в кейсах, точки карусели, переключатель языка */
+  .case__btn { min-height: 44px; padding: 6px 0; }
+  .cases__dot { position: relative; }
+  .cases__dot::before { content: ""; position: absolute; inset: -16px -10px; }
+  .langsw__btn { min-height: 36px; }
+
+  /* кнопки внутри инженерных виджетов: шрифт не ниже 11px, высота не ниже 32px */
+  .wpreset, .term-chip { font-size: 11px; min-height: 32px; }
+  .tune-btn { font-size: 10.5px; }
+  .widget-pill, .wtag { font-size: 10.5px; }
+
+  /* ROI 2x2: колонки грида не должны раздуваться длинными словами (на 320px давало горизонтальный скролл) */
+  .profit__col { min-width: 0; }
+}
+@media (max-width: 360px) {
+  .profit__grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .case__badge-stack { font-size: 11px; }
+  .case__badge-metric { font-size: 10.5px; }
+}

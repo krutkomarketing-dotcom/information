@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     burger.addEventListener('click', () => {
       const open = burger.getAttribute('aria-expanded') === 'true';
       burger.setAttribute('aria-expanded', String(!open));
-      burger.setAttribute('aria-label', open ? 'Открыть меню' : 'Закрыть меню');
+      burger.setAttribute('aria-label', open ? T('top.label.otkryt-menyu', 'Открыть меню') : T('top.label.zakryt-menyu', 'Закрыть меню'));
       nav.classList.toggle('is-open', !open);
     });
     nav.addEventListener('click', e => {
@@ -60,11 +60,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let activeSpot = null;
 
+    // На телефоне карточка центрируется по точке и может вылезти за сцену —
+    // сдвигаем её внутрь через --pop-shift (см. .hero-spot__pop в style.css)
+    function fitPop(spot) {
+      const pop = spot.querySelector('.hero-spot__pop');
+      if (!pop || window.innerWidth > 768) return;
+      pop.style.setProperty('--pop-shift', '0px');
+      const s = stage.getBoundingClientRect();
+      const p = pop.getBoundingClientRect();
+      const pad = 8;
+      let shift = 0;
+      if (p.left < s.left + pad) shift = (s.left + pad) - p.left;
+      else if (p.right > s.right - pad) shift = (s.right - pad) - p.right;
+      if (shift) pop.style.setProperty('--pop-shift', shift.toFixed(1) + 'px');
+    }
+
     function setActive(spot) {
       if (activeSpot === spot) return;
       if (activeSpot) activeSpot.classList.remove('is-open');
       activeSpot = spot;
-      if (activeSpot) activeSpot.classList.add('is-open');
+      if (activeSpot) {
+        activeSpot.classList.add('is-open');
+        fitPop(activeSpot);
+      }
     }
 
     function clearActive() {
@@ -161,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const render = () => {
       steps.forEach((s, i) => s.classList.toggle('is-active', i === cur));
       fill.style.width = ((cur + 1) / total * 100).toFixed(1) + '%';
-      count.textContent = `${cur + 1} из ${total}`;
+      count.textContent = T('quiz.count', '{n} из {total}', { n: cur + 1, total });
       back.hidden = cur === 0;
       next.hidden = cur === total - 1;
       send.hidden = cur !== total - 1;
@@ -330,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dot = document.createElement('button');
         dot.type = 'button';
         dot.className = 'cases__dot' + (s === 0 ? ' is-active' : '');
-        dot.setAttribute('aria-label', `Перейти к слайду ${s + 1}`);
+        dot.setAttribute('aria-label', T('types.label.slide', 'Перейти к слайду {n}', { n: s + 1 }));
         dot.addEventListener('click', () => {
           scrollToSlide(s);
         });
@@ -436,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- ДИНАМИЧЕСКИЕ ТАРИФЫ (РЫНОЧНЫЕ ЦЕНЫ С ВЫЧЕТОМ 20%) ---------- */
-  const PLAN_DATA = {
+  const PLAN_DATA = TD('plans', {
     landing: {
       sub: 'Стоимость создания продающего лендинга в Беларуси с выгодой 20% от рынка',
       plans: [
@@ -874,7 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       ]
     }
-  };
+  });
 
   const ptabs = [...document.querySelectorAll('.ptab')];
   const pricingSub = document.querySelector('.js-pricing-sub');
@@ -901,7 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (termEl) termEl.textContent = tierData.term;
       if (descEl) descEl.textContent = tierData.desc;
 
-      if (marketEl) marketEl.textContent = 'рыночная ' + tierData.market;
+      if (marketEl) marketEl.textContent = T('pricing.market-prefix', 'рыночная ') + tierData.market;
       if (valEl) {
         valEl.textContent = tierData.price;
         valEl.setAttribute('data-count', tierData.val);
@@ -928,6 +946,8 @@ document.addEventListener('DOMContentLoaded', () => {
       updatePricingPlans(cat);
     });
   });
+  // первичный рендер из данных: так статичная разметка и словарь EN не расходятся
+  updatePricingPlans('landing');
 
   /* ---------- отзывы о команде ---------- */
   const scroller = document.querySelector('.reviews__scroller');
@@ -1067,7 +1087,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (more && teamText) {
     more.addEventListener('click', () => {
       const clamped = teamText.classList.toggle('is-clamped');
-      more.textContent = clamped ? 'Показать всё' : 'Свернуть';
+      more.textContent = clamped ? T('team.show-all', 'Показать всё') : T('team.collapse', 'Свернуть');
       more.setAttribute('aria-expanded', String(!clamped));
     });
   }
@@ -1090,7 +1110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (globeCanvas && globeViewport && typeof THREE !== 'undefined') {
     // Каталог активных точек глобальной сети KV-web
     // Каталог активных городов глобальной сети KV-web (реальные координаты, комфортное распределение)
-    const HUBS = {
+    const HUBS = TD('hubs', {
       // --- Главный офис (HQ) ---
       minsk: {
         id: 'minsk',
@@ -1437,7 +1457,11 @@ document.addEventListener('DOMContentLoaded', () => {
         region: 'us',
         parentHub: 'newyork'
       }
-    };
+    });
+    // регионы, скрытые для текущего языка (i18n/en.js → __config.hideHubRegions)
+    (T.config.hideHubRegions || []).forEach(r => {
+      Object.keys(HUBS).forEach(k => { if (HUBS[k].region === r) delete HUBS[k]; });
+    });
 
     // Конвертер географических координат в координаты сферы Three.js
     const GLOBE_RADIUS = 2.0;
@@ -2253,7 +2277,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- цена доезжает до значения: взгляд остаётся на цифре ---------- */
   if (!reduce) {
     const nums = [...document.querySelectorAll('[data-count]')];
-    const fmt = n => n.toLocaleString('ru-RU').replace(/ /g, ' ');
+    const fmt = n => n.toLocaleString(T.locale).replace(/ /g, ' ');
     const nio = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
@@ -2265,7 +2289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tick = now => {
           const k = Math.min(1, (now - t0) / dur);
           const eased = 1 - Math.pow(1 - k, 4);           // ease-out-quart
-          el.textContent = `от ${fmt(Math.round(to * eased))} BYN`;
+          el.textContent = T('pricing.price-fmt', 'от {n} BYN', { n: fmt(Math.round(to * eased)) });
           if (k < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -2359,7 +2383,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ok && !bad) bad = inp;
       });
       if (bad) {
-        say(msg, 'Заполните телефон и имя — иначе мы не сможем с вами связаться.', 'is-bad');
+        say(msg, T('form.required', 'Заполните телефон и имя — иначе мы не сможем с вами связаться.'), 'is-bad');
         bad.focus();
         return;
       }
@@ -2370,16 +2394,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const btn = form.querySelector('button[type="submit"]');
       const label = btn ? btn.textContent : '';
-      if (btn) { btn.disabled = true; btn.textContent = 'Отправляем…'; }
+      if (btn) { btn.disabled = true; btn.textContent = T('form.sending', 'Отправляем…'); }
 
       try {
         await deliver(data);
         form.reset();
         form.querySelectorAll('.is-bad').forEach(el => el.classList.remove('is-bad'));
-        say(msg, 'Спасибо! Заявка принята — свяжемся с вами в ближайшее время.', 'is-ok');
+        say(msg, T('form.success', 'Спасибо! Заявка принята — свяжемся с вами в ближайшее время.'), 'is-ok');
       } catch (err) {
         console.error(err);
-        say(msg, 'Не получилось отправить. Позвоните нам: +375 (29) 000-00-00', 'is-bad');
+        say(msg, T('form.fail', 'Не получилось отправить. Позвоните нам: +375 (29) 000-00-00'), 'is-bad');
       } finally {
         if (btn) { btn.disabled = false; btn.textContent = label; }
       }
@@ -2496,7 +2520,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rerunBtn = widgetFrontend.querySelector('.js-perf-rerun');
       const tuneWeightBtn = widgetFrontend.querySelector('.js-tune-weight');
 
-      const presetData = {
+      const presetData = TD('presets', {
         vanilla: {
           score: 100,
           time: 'Отклик 0.28 сек',
@@ -2530,15 +2554,15 @@ document.addEventListener('DOMContentLoaded', () => {
           tag2: 'Edge Caching: HIT',
           isBad: false
         }
-      };
+      });
 
       // Интерактивный тюнер веса бандла
-      const weightSteps = [
+      const weightSteps = TD('weightSteps', [
         { weight: "'12.4 kB'", score: 100, time: 'Отклик 0.28 сек', tag2: '0 лишних скриптов', isBad: false },
         { weight: "'48.2 kB'", score: 98, time: 'Отклик 0.39 сек', tag2: 'Tree-shaking: 100%', isBad: false },
         { weight: "'184 kB'", score: 91, time: 'Отклик 0.85 сек', tag2: 'Оптимизированный бандл', isBad: false },
         { weight: "'842 kB'", score: 38, time: 'Отклик 3.90 сек', tag2: '62 лишних скрипта', isBad: true }
-      ];
+      ]);
       let weightIdx = 0;
 
       let currentScore = 100;
@@ -2666,7 +2690,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const h = Math.floor((uptimeSeconds % 86400) / 3600);
           const m = Math.floor((uptimeSeconds % 3600) / 60);
           const s = uptimeSeconds % 60;
-          uptimeEl.textContent = `Uptime: ${d}d ${h}h ${m}m ${s}s • Защита от DDoS`;
+          uptimeEl.textContent = T('about.uptime', 'Uptime: {t} • Защита от DDoS', { t: `${d}d ${h}h ${m}m ${s}s` });
         }
         setInterval(() => {
           uptimeSeconds++;
@@ -2696,24 +2720,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pulseDot) pulseDot.classList.add('is-busy');
 
         if (cleanCmd === 'load' || cleanCmd.startsWith('load') || cleanCmd === 'stress') {
-          setTimeout(() => addTerminalLine('<span class="term-prompt">&gt;</span> Запуск теста: 10 000 параллельных rps...'), 120);
+          setTimeout(() => addTerminalLine(T('term.load-1', '<span class="term-prompt">&gt;</span> Запуск теста: 10 000 параллельных rps...')), 120);
           setTimeout(() => addTerminalLine('<span class="term-icon">✔</span> Redis Cache: hit rate 99.8% <span class="term-meta">[0.3ms]</span>'), 280);
-          setTimeout(() => addTerminalLine('<span class="term-icon">✔</span> PostgreSQL: пул 42/500 соединений OK'), 440);
+          setTimeout(() => addTerminalLine(T('term.load-3', '<span class="term-icon">✔</span> PostgreSQL: пул 42/500 соединений OK')), 440);
           setTimeout(() => {
-            addTerminalLine('<span class="term-icon">✔</span> 10 000 запросов обработано за 0.78с. Ошибок: 0 (200 OK)');
+            addTerminalLine(T('term.load-4', '<span class="term-icon">✔</span> 10 000 запросов обработано за 0.78с. Ошибок: 0 (200 OK)'));
             if (pulseDot) pulseDot.classList.remove('is-busy');
           }, 600);
         } else if (cleanCmd === 'ping') {
-          setTimeout(() => addTerminalLine('<span class="term-prompt">&gt;</span> Минск (BY-IX): <span class="term-icon">1.1ms</span>'), 100);
-          setTimeout(() => addTerminalLine('<span class="term-prompt">&gt;</span> Москва (MSK-IX): <span class="term-icon">7.9ms</span>'), 200);
+          setTimeout(() => addTerminalLine(T('term.ping-1', '<span class="term-prompt">&gt;</span> Минск (BY-IX): <span class="term-icon">1.1ms</span>')), 100);
+          setTimeout(() => addTerminalLine(T('term.ping-2', '<span class="term-prompt">&gt;</span> Москва (MSK-IX): <span class="term-icon">7.9ms</span>')), 200);
           setTimeout(() => {
-            addTerminalLine('<span class="term-prompt">&gt;</span> Франкфурт: <span class="term-icon">23.4ms</span>');
+            addTerminalLine(T('term.ping-3', '<span class="term-prompt">&gt;</span> Франкфурт: <span class="term-icon">23.4ms</span>'));
             if (pulseDot) pulseDot.classList.remove('is-busy');
           }, 320);
         } else if (cleanCmd === 'backup') {
-          setTimeout(() => addTerminalLine('<span class="term-prompt">&gt;</span> Создание снепшота PostgreSQL базы...'), 120);
+          setTimeout(() => addTerminalLine(T('term.backup-1', '<span class="term-prompt">&gt;</span> Создание снепшота PostgreSQL базы...')), 120);
           setTimeout(() => {
-            addTerminalLine('<span class="term-icon">✔</span> Снимок зашифрован (AES-256) и сохранен в S3 (2.8с)');
+            addTerminalLine(T('term.backup-2', '<span class="term-icon">✔</span> Снимок зашифрован (AES-256) и сохранен в S3 (2.8с)'));
             if (pulseDot) pulseDot.classList.remove('is-busy');
           }, 350);
         } else if (cleanCmd === 'clear') {
@@ -2721,17 +2745,17 @@ document.addEventListener('DOMContentLoaded', () => {
           if (pulseDot) pulseDot.classList.remove('is-busy');
         } else if (cleanCmd === 'help') {
           setTimeout(() => {
-            addTerminalLine('<span class="term-prompt">&gt;</span> Команды: <b>load</b>, <b>ping</b>, <b>backup</b>, <b>status</b>, <b>clear</b>');
+            addTerminalLine(T('term.help', '<span class="term-prompt">&gt;</span> Команды: <b>load</b>, <b>ping</b>, <b>backup</b>, <b>status</b>, <b>clear</b>'));
             if (pulseDot) pulseDot.classList.remove('is-busy');
           }, 100);
         } else if (cleanCmd === 'status') {
           setTimeout(() => {
-            addTerminalLine('<span class="term-icon">✔</span> CPU: 7% • ОЗУ: 1.2/16 GB • Nginx workers: 8 • 0 сбоев');
+            addTerminalLine(T('term.status', '<span class="term-icon">✔</span> CPU: 7% • ОЗУ: 1.2/16 GB • Nginx workers: 8 • 0 сбоев'));
             if (pulseDot) pulseDot.classList.remove('is-busy');
           }, 120);
         } else {
           setTimeout(() => {
-            addTerminalLine(`<span style="color:#ff5f56">kv-cluster: '${escapeHtml(cleanCmd)}' не найдена. Введите 'help'</span>`);
+            addTerminalLine(T('term.not-found', "<span style=\"color:#ff5f56\">kv-cluster: '{cmd}' не найдена. Введите 'help'</span>", { cmd: escapeHtml(cleanCmd) }));
             if (pulseDot) pulseDot.classList.remove('is-busy');
           }, 120);
         }
@@ -2774,36 +2798,36 @@ document.addEventListener('DOMContentLoaded', () => {
       const btnInvoice = widgetTg.querySelector('.js-tg-btn-invoice');
 
       let leadNum = 148;
-      const sampleLeads = [
+      const sampleLeads = TD('leads', [
         { name: 'Екатерина (Минск)', tariff: 'Интернет-магазин + CRM', budget: '3 200 BYN', crm: 'amoCRM: Новый лид' },
         { name: 'Дмитрий (Гродно)', tariff: 'Telegram Mini App (Каталог + Заказ)', budget: '2 400 BYN', crm: 'Bitrix24: Сделка создана' },
         { name: 'Максим (Брест)', tariff: 'Сайт-сервис + Калькулятор', budget: '3 800 BYN', crm: 'amoCRM: Квалификация' },
         { name: 'Ольга (Витебск)', tariff: 'Корпоративный портал', budget: '1 950 BYN', crm: 'amoCRM: Новый лид' }
-      ];
+      ]);
       let leadIdx = 0;
 
       function getCurrentTimeStr() {
         const now = new Date();
         const hh = String(now.getHours()).padStart(2, '0');
         const mm = String(now.getMinutes()).padStart(2, '0');
-        return `${hh}:${mm} • Доставлено`;
+        return T('about.delivered', '{t} • Доставлено', { t: `${hh}:${mm}` });
       }
 
       simBtn?.addEventListener('click', () => {
         playHaptic('pop');
         if (!statusEl) return;
-        statusEl.textContent = 'печатает...';
+        statusEl.textContent = T('about.bot-typing', 'печатает...');
         statusEl.classList.add('is-typing');
 
         setTimeout(() => {
-          statusEl.textContent = 'бот онлайн';
+          statusEl.textContent = T('about.bot-onlayn', 'бот онлайн');
           statusEl.classList.remove('is-typing');
 
           leadNum++;
           const data = sampleLeads[leadIdx % sampleLeads.length];
           leadIdx++;
 
-          if (badgeEl) badgeEl.textContent = `Новая заявка • Сайт #${leadNum}`;
+          if (badgeEl) badgeEl.textContent = T('about.new-lead', 'Новая заявка • Сайт #{n}', { n: leadNum });
           if (clientEl) clientEl.textContent = data.name;
           if (tariffEl) tariffEl.textContent = data.tariff;
           if (budgetEl) budgetEl.textContent = data.budget;
@@ -2827,10 +2851,10 @@ document.addEventListener('DOMContentLoaded', () => {
           repliesFeed.innerHTML = '';
         }
         if (statusEl) {
-          statusEl.textContent = 'история очищена';
+          statusEl.textContent = T('about.bot-cleared', 'история очищена');
           statusEl.style.color = 'rgba(255,255,255,0.6)';
           setTimeout(() => {
-            statusEl.textContent = 'бот онлайн';
+            statusEl.textContent = T('about.bot-onlayn', 'бот онлайн');
             statusEl.style.color = '';
           }, 1000);
         }
@@ -2844,7 +2868,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btnCrm?.addEventListener('click', () => {
         playHaptic('click');
         if (!crmStatusEl) return;
-        crmStatusEl.textContent = 'amoCRM: Квалифицирован инженером';
+        crmStatusEl.textContent = T('about.crm-qualified', 'amoCRM: Квалифицирован инженером');
         crmStatusEl.style.color = 'var(--lime)';
       });
 
@@ -2853,7 +2877,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!repliesFeed) return;
         const bubble = document.createElement('div');
         bubble.className = 'tg-msg tg-msg--out is-pop';
-        bubble.innerHTML = `<b>Вы:</b> Здравствуйте! Получили заявку #${leadNum}, свяжемся с вами в Telegram в течение 10 минут.`;
+        bubble.innerHTML = T('about.reply-bubble', '<b>Вы:</b> Здравствуйте! Получили заявку #{n}, свяжемся с вами в Telegram в течение 10 минут.', { n: leadNum });
         repliesFeed.appendChild(bubble);
         bubble.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
@@ -2863,7 +2887,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!repliesFeed) return;
         const bubble = document.createElement('div');
         bubble.className = 'tg-msg tg-msg--sys is-pop';
-        bubble.innerHTML = `<b>Счет в ЕРИП:</b> #KV-${leadNum} сформирован. Оплата через мобильный банк без комиссии.`;
+        bubble.innerHTML = T('about.invoice-bubble', '<b>Счет в ЕРИП:</b> #KV-{n} сформирован. Оплата через мобильный банк без комиссии.', { n: leadNum });
         repliesFeed.appendChild(bubble);
         bubble.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
